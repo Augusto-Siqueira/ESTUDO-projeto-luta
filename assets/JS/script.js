@@ -9,3 +9,6 @@ const stage = new Stage(
 );
 
 stage.start();
+
+
+console.log(`${attacking.name} está atacando ${attacked.name}`);

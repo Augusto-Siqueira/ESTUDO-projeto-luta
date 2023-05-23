@@ -85,7 +85,7 @@ class Stage {
     //Criando a função (update) que será responsável por atualizar a tela com as informações dos lutadores
     update() {
         //fighter 1
-        this.fighter1El.querySelector('.name').innerHTML = `${this.fighter1.name} - ${this.fighter1.life} HP`;
+        this.fighter1El.querySelector('.name').innerHTML = `${this.fighter1.name} - ${this.fighter1.life.toFixed(1)} HP`;
         //preenchimento da barra de vida
         let f1pct = (this.fighter1.life / this.fighter1.maxlife) * 100;
         //Apresentação gráfica da quantidade de vida de 0 à 100
@@ -93,7 +93,7 @@ class Stage {
 
 
         //fighter 2
-        this.fighter2El.querySelector('.name').innerHTML = `${this.fighter2.name} - ${this.fighter2.life} HP`;
+        this.fighter2El.querySelector('.name').innerHTML = `${this.fighter2.name} - ${this.fighter2.life.toFixed(1)} HP`;
         //preenchimento da barra de vida
         let f2pct = (this.fighter2.life / this.fighter2.maxlife) * 100;
         //Apresentação gráfica da quantidade de vida de 0 à 100
@@ -101,8 +101,31 @@ class Stage {
     }
     
     doAttack(attacking, attacked) {
-        console.log(`${attacking.name} está atacando ${attacked.name}`);
+        
 
-        this.update();
+
+        //Criando fatores de ataque e defesa
+        if (attacking.life <= 0 || attacked.life <= 0) {
+            console.log(`Atacando cachorro morto`);
+            return;
+        }
+
+        let attackFactor = (Math.random() * 2).toFixed(2);
+        let defenseFactor = (Math.random() * 2).toFixed(2);
+
+        let actualAttack = attacking.attack * attackFactor;
+        let actualDefense = attacked.defense * defenseFactor;
+
+        if (actualAttack > actualDefense) {
+            attacked.life -= actualAttack;
+            console.log(`${attacking.name} causou ${actualAttack} de dano em ${attacked.name}`);
+        } else {
+            console.log(`${attacked.name} conseguiu defender...`);
+        }
+
+
+
+
+        this.update(); 
     }
 }
